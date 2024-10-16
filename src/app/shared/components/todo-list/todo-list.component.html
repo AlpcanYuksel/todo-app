@@ -1,20 +1,18 @@
-<div class="container">
+<div class="containers">
     <div>
-        <input placeholder="Yapılacak işi tanımlayınız..." [(ngModel)]="input" type="text">
-        <button (click)="handleSubmit()">Ekle</button>
+        <input placeholder="Yapılacak işi tanımlayınız..." [(ngModel)]="toDoRequest.title" type="text">
+        <button (click)="createToDo()">Ekle</button>
+        <input placeholder="id ile arama yapınız..." [(ngModel)]="searchId" type="number"
+            (input)="fetchTodos(searchId)">
+    </div>
+</div>
+<div class="row align-items-center justify-content-center">
+    @for(todo of toDoListFromBackend; track todo; let i = $index) {
+    <div class="col-2">
+        <app-todo-card [toDoFromOtherPage]="todo.title" [toDoId]="todo.id" (onRemoveClick)="removeTodo($event)" />
     </div>
 
-    <div>
-        <ul>
-            @for (todo of todoList; track todo ; let i = $index) {
-            <li>{{i + 1}}.{{todo}}
-                <button (click)="removeTodo(i)">X</button>
-            </li>
-            } @empty {
-            <li>Herhangi bir iş yok.</li>
-            }
-        </ul>
-
-    </div>
-
+    } @empty {
+    <p class="col-2">Henüz bir todo eklemediniz.</p>
+    }
 </div>
